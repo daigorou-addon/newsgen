@@ -893,8 +893,8 @@
 
     // バラエティ見出し（時計＋LIVE＋色つきタグ＋白帯ヘッドライン）
     { id:'variety', nameKey:'tpl_variety', items: [
-      { nx:0.02, ny:0.03, nw:0.22, nh:0.075, textKey:'default_weather', fontFamily:'sans', fontSizeRatio:0.024, weight:'900', color:'#ffffff', align:'center', frameShape:'rounded', frameColor:'#111418', frameOpacity:100 },
-      { nx:0.02, ny:0.115, nw:0.1, nh:0.06, textKey:'default_live', fontSizeRatio:0.022, weight:'900', color:'#ffffff', align:'center', frameShape:'pill', frameColor:'#e8342a', frameOpacity:100 },
+      { nx:0.02, ny:0.03, nw:0.1, nh:0.06, textKey:'default_live', fontSizeRatio:0.022, weight:'900', color:'#ffffff', align:'center', frameShape:'pill', frameColor:'#e8342a', frameOpacity:100 },
+      { nx:0.13, ny:0.03, nw:0.26, nh:0.06, textKey:'default_weather', fontFamily:'sans', fontSizeRatio:0.024, weight:'900', color:'#ffffff', align:'left', frameShape:'none', outline:true },
       { nx:0.62, ny:0.03, nw:0.13, nh:0.065, textKey:'default_tag', fontSizeRatio:0.024, weight:'900', color:'#ffffff', align:'center', frameShape:'pill', frameColor:'#17b6d4', frameOpacity:100 },
       { nx:0.76, ny:0.03, nw:0.22, nh:0.065, textKey:'default_change', fontSizeRatio:0.02, weight:'700', color:'#141414', align:'center', frameShape:'rounded', frameColor:'#ffffff', frameOpacity:100 },
       { nx:0.76, ny:0.105, nw:0.22, nh:0.05, textKey:'default_variety_q', fontSizeRatio:0.016, weight:'700', color:'#ffffff', align:'center', frameShape:'rounded', frameColor:'#d6389a', frameOpacity:100 },
@@ -904,9 +904,8 @@
 
     // 衝撃テロップ（赤スタンプ＋大きな白ヘッドライン）
     { id:'impact', nameKey:'tpl_impact', items: [
-      { nx:0.55, ny:0.04, nw:0.42, nh:0.16, textKey:'default_change', fontSizeRatio:0.03, weight:'900', color:'#141414', align:'center', frameShape:'rounded', frameColor:'#ffffff', frameOpacity:100 },
-      { nx:0.02, ny:0.78, nw:0.15, nh:0.17, textKey:'default_impact', fontSizeRatio:0.036, weight:'900', color:'#ffffff', align:'center', frameShape:'pill', frameColor:'#e8342a', frameOpacity:100 },
-      { nx:0.19, ny:0.8, nw:0.79, nh:0.13, textKey:'default_headline', fontSizeRatio:0.05, weight:'900', color:'#141414', align:'left', frameShape:'rounded', frameColor:'#ffffff', frameOpacity:100 },
+      { nx:0.02, ny:0.76, nw:0.17, nh:0.2, textKey:'default_impact', fontSizeRatio:0.038, weight:'900', color:'#ffffff', align:'center', frameShape:'circle', frameColor:'#e8342a', frameOpacity:100, border:true, borderColor:'#ffffff', borderWidth:5 },
+      { nx:0.21, ny:0.8, nw:0.77, nh:0.13, textKey:'default_headline', fontSizeRatio:0.05, weight:'900', color:'#141414', align:'left', frameShape:'rounded', frameColor:'#ffffff', frameOpacity:100 },
     ]},
 
     // 二段見出し（ナビー×淡ブルーのニ色構成）
@@ -933,6 +932,10 @@
     // 監視カメラ風（ビューファインダー枠＋REC＋タイムスタンプ＋カメラID）
     { id:'cctv', nameKey:'tpl_cctv', items: [
       { nx:0, ny:0, nw:1, nh:1, text:'', frameShape:'rect', frameColor:'#ffffff', frameOpacity:0, border:true, borderColor:'#e8e8e8', borderWidth:3 },
+      { nx:0.015, ny:0.02, nw:0.07, nh:0.09, text:'┌', fontFamily:'mono', fontSizeRatio:0.07, weight:'900', color:'#ffffff', align:'left', frameShape:'none', outline:true },
+      { nx:0.915, ny:0.02, nw:0.07, nh:0.09, text:'┐', fontFamily:'mono', fontSizeRatio:0.07, weight:'900', color:'#ffffff', align:'right', frameShape:'none', outline:true },
+      { nx:0.015, ny:0.89, nw:0.07, nh:0.09, text:'└', fontFamily:'mono', fontSizeRatio:0.07, weight:'900', color:'#ffffff', align:'left', frameShape:'none', outline:true },
+      { nx:0.915, ny:0.89, nw:0.07, nh:0.09, text:'┘', fontFamily:'mono', fontSizeRatio:0.07, weight:'900', color:'#ffffff', align:'right', frameShape:'none', outline:true },
       { nx:0.03, ny:0.03, nw:0.18, nh:0.055, text:'● REC', fontFamily:'mono', fontSizeRatio:0.024, weight:'900', color:'#ff3b30', align:'left', frameShape:'none', outline:true },
       { nx:0.5, ny:0.03, nw:0.47, nh:0.05, textKey:'default_cctv_time', fontFamily:'mono', fontSizeRatio:0.02, weight:'700', color:'#ffffff', align:'right', frameShape:'none', outline:true },
       { nx:0.03, ny:0.9, nw:0.6, nh:0.05, textKey:'default_camera_id', fontFamily:'mono', fontSizeRatio:0.02, weight:'700', color:'#ffffff', align:'left', frameShape:'none', outline:true },

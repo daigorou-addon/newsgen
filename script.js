@@ -6,7 +6,43 @@
   const FONT_SANS  = '"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif';
   const FONT_MONO   = '"JetBrains Mono",monospace';
   const FONT_SERIF  = '"Noto Serif JP",serif';
+  const FALLBACK = ',"Hiragino Sans","Noto Sans JP",sans-serif';
+  // 追加フォント: key -> [CSS名, 使える太さ]
+  const EXTRA_FONTS = {
+    notosans:   ['Noto Sans JP', [400,500,700,900]],
+    mplus1p:    ['M PLUS 1p', [400,700,900]],
+    mplusround: ['M PLUS Rounded 1c', [400,700,900]],
+    zenmaru:    ['Zen Maru Gothic', [400,700,900]],
+    bizudp:     ['BIZ UDPGothic', [400,700]],
+    kosugimaru: ['Kosugi Maru', [400]],
+    kiwimaru:   ['Kiwi Maru', [400,500]],
+    zenoldmin:  ['Zen Old Mincho', [400,700,900]],
+    zenantique: ['Zen Antique', [400]],
+    kleeone:    ['Klee One', [400,600]],
+    yujisyuku:  ['Yuji Syuku', [400]],
+    dela:       ['Dela Gothic One', [400]],
+    rocknroll:  ['RocknRoll One', [400]],
+    reggae:     ['Reggae One', [400]],
+    rampart:    ['Rampart One', [400]],
+    stick:      ['Stick', [400]],
+    potta:      ['Potta One', [400]],
+    mochiy:     ['Mochiy Pop One', [400]],
+    hachimaru:  ['Hachi Maru Pop', [400]],
+    darumadrop: ['Darumadrop One', [400]],
+    yusei:      ['Yusei Magic', [400]],
+    yomogi:     ['Yomogi', [400]],
+    trainone:   ['Train One', [400]],
+    dotgothic:  ['DotGothic16', [400]],
+  };
   const FONT_MAP = { sans: FONT_SANS, serif: FONT_SERIF, mono: FONT_MONO };
+  Object.keys(EXTRA_FONTS).forEach(k => { FONT_MAP[k] = '"' + EXTRA_FONTS[k][0] + '"' + FALLBACK; });
+  // 太字が無いフォントで擬似ボールドが掛かって崩れないよう、使える太さに合わせる
+  function fontWeightFor(item){
+    const ex = EXTRA_FONTS[item.fontFamily];
+    const w = parseInt(item.weight, 10) || 700;
+    if(!ex) return item.weight || 700;
+    return ex[1].reduce((best, cur) => Math.abs(cur - w) < Math.abs(best - w) ? cur : best, ex[1][0]);
+  }
 
   const RATIOS = {
     '16:9': [1280, 720],
@@ -190,7 +226,7 @@
     const padX = w*0.06, padY = h*0.12;
     const maxW = Math.max(4, w - padX*2);
     const fam = FONT_MAP[item.fontFamily] || FONT_SANS;
-    c.font = `${item.weight||700} ${item.fontSize}px ${fam}`;
+    c.font = `${fontWeightFor(item)} ${item.fontSize}px ${fam}`;
     const lineHeight = item.fontSize * 1.25;
     const lines = wrapLines(c, item.text, maxW);
     const totalH = lines.length * lineHeight;
@@ -400,7 +436,7 @@
     applyFrameShapeDOM(bg, bar, item);
     inner.style.fontFamily = FONT_MAP[item.fontFamily] || FONT_SANS;
     inner.style.fontSize = item.fontSize + 'px';
-    inner.style.fontWeight = item.weight;
+    inner.style.fontWeight = fontWeightFor(item);
     inner.style.color = item.color;
     inner.style.textAlign = item.align;
     inner.style.justifyContent = item.align==='left' ? 'flex-start' : item.align==='right' ? 'flex-end' : 'center';
@@ -862,11 +898,11 @@
     return {
       id: 'it'+(idCounter++),
       type: 'text',
-      x: def.nx*W, y: def.ny*H, w: def.nw*W, h: def.nh*H,
+      x: def.nx*W, y: def.ny*H, w: def.squareByH ? def.nh*H : def.nw*W, h: def.nh*H,
       z,
       text: def.textKey ? t(def.textKey) : (def.text || ''),
       fontFamily: def.fontFamily || 'sans',
-      fontSize: (def.fontSizeRatio || 0.05) * H,
+      fontSize: ((def.longFontSizeRatio && ((def.textKey ? t(def.textKey) : (def.text||'')).length > 2)) ? def.longFontSizeRatio : (def.fontSizeRatio || 0.05)) * H,
       weight: def.weight || '700',
       color: def.color || '#ffffff',
       align: def.align || 'left',
@@ -876,7 +912,7 @@
       outline: !!def.outline,
       border: !!def.border,
       borderColor: def.borderColor || '#141414',
-      borderWidth: def.borderWidth != null ? def.borderWidth : Math.max(2, Math.min(def.nw*W, def.nh*H) * 0.025),
+      borderWidth: def.borderWidth != null ? def.borderWidth : Math.max(2, Math.min(def.squareByH ? def.nh*H : def.nw*W, def.nh*H) * 0.025),
     };
   }
 
@@ -904,7 +940,7 @@
 
     // 衝撃テロップ（赤スタンプ＋大きな白ヘッドライン）
     { id:'impact', nameKey:'tpl_impact', items: [
-      { nx:0.02, ny:0.76, nw:0.17, nh:0.2, textKey:'default_impact', fontSizeRatio:0.038, weight:'900', color:'#ffffff', align:'center', frameShape:'circle', frameColor:'#e8342a', frameOpacity:100, border:true, borderColor:'#ffffff', borderWidth:5 },
+      { nx:0.02, ny:0.68, nw:0.164, nh:0.292, squareByH:true, textKey:'default_impact', fontSizeRatio:80/720, longFontSizeRatio:0.038, weight:'900', color:'#ffffff', align:'center', frameShape:'circle', frameColor:'#e8342a', frameOpacity:100, border:true, borderColor:'#ffffff', borderWidth:7 },
       { nx:0.21, ny:0.8, nw:0.77, nh:0.13, textKey:'default_headline', fontSizeRatio:0.05, weight:'900', color:'#141414', align:'left', frameShape:'rounded', frameColor:'#ffffff', frameOpacity:100 },
     ]},
 
@@ -936,9 +972,9 @@
       { nx:0.915, ny:0.02, nw:0.07, nh:0.09, text:'┐', fontFamily:'mono', fontSizeRatio:0.07, weight:'900', color:'#ffffff', align:'right', frameShape:'none', outline:true },
       { nx:0.015, ny:0.89, nw:0.07, nh:0.09, text:'└', fontFamily:'mono', fontSizeRatio:0.07, weight:'900', color:'#ffffff', align:'left', frameShape:'none', outline:true },
       { nx:0.915, ny:0.89, nw:0.07, nh:0.09, text:'┘', fontFamily:'mono', fontSizeRatio:0.07, weight:'900', color:'#ffffff', align:'right', frameShape:'none', outline:true },
-      { nx:0.03, ny:0.03, nw:0.18, nh:0.055, text:'● REC', fontFamily:'mono', fontSizeRatio:0.024, weight:'900', color:'#ff3b30', align:'left', frameShape:'none', outline:true },
-      { nx:0.5, ny:0.03, nw:0.47, nh:0.05, textKey:'default_cctv_time', fontFamily:'mono', fontSizeRatio:0.02, weight:'700', color:'#ffffff', align:'right', frameShape:'none', outline:true },
-      { nx:0.03, ny:0.9, nw:0.6, nh:0.05, textKey:'default_camera_id', fontFamily:'mono', fontSizeRatio:0.02, weight:'700', color:'#ffffff', align:'left', frameShape:'none', outline:true },
+      { nx:0.07, ny:0.05, nw:0.18, nh:0.055, text:'● REC', fontFamily:'mono', fontSizeRatio:0.024, weight:'900', color:'#ff3b30', align:'left', frameShape:'none', outline:true },
+      { nx:0.5, ny:0.05, nw:0.43, nh:0.05, textKey:'default_cctv_time', fontFamily:'mono', fontSizeRatio:0.02, weight:'700', color:'#ffffff', align:'right', frameShape:'none', outline:true },
+      { nx:0.07, ny:0.895, nw:0.6, nh:0.05, textKey:'default_camera_id', fontFamily:'mono', fontSizeRatio:0.02, weight:'700', color:'#ffffff', align:'left', frameShape:'none', outline:true },
     ]},
 
     // デジカメ風（AFフォーカス枠＋バッテリー＋撮影設定＋残り枚数）

@@ -940,7 +940,7 @@
 
     // 衝撃テロップ（赤スタンプ＋大きな白ヘッドライン）
     { id:'impact', nameKey:'tpl_impact', items: [
-      { nx:0.02, ny:0.68, nw:0.164, nh:0.292, squareByH:true, textKey:'default_impact', fontSizeRatio:80/720, longFontSizeRatio:0.038, weight:'900', color:'#ffffff', align:'center', frameShape:'circle', frameColor:'#e8342a', frameOpacity:100, border:true, borderColor:'#ffffff', borderWidth:7 },
+      { nx:0.02, ny:0.68, nw:0.164, nh:0.292, squareByH:true, textKey:'default_impact', fontSizeRatio:80/720, longFontSizeRatio:0.038, weight:'900', color:'#ffffff', align:'center', frameShape:'circle', frameColor:'#e8342a', frameOpacity:100, border:true, borderColor:'#ffffff' },
       { nx:0.21, ny:0.8, nw:0.77, nh:0.13, textKey:'default_headline', fontSizeRatio:0.05, weight:'900', color:'#141414', align:'left', frameShape:'rounded', frameColor:'#ffffff', frameOpacity:100 },
     ]},
 
